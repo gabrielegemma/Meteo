@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>La temperatura secondo Ronnie!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #temperature {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        #weather-icon {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App</h1>
+        <input type="text" id="city" placeholder="Enter city name">
+        <button onclick="getWeather()">Get Temperature</button>
+        <p id="temperature"></p>
+        <img id="weather-icon" src="" alt="Weather Icon" style="display:none;">
+    </div>
+
+    <script>
+        async function getWeather() {
+            const city = document.getElementById('city').value;
+            const apiKey = 'e4b0652da7c269b0821a7cfcb13672d5'; // Sostituisci con la tua API key di OpenWeatherMap
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data.main) {
+                    document.getElementById('temperature').innerText = `Temperature in ${city}: ${data.main.temp}°C`;
+                    const iconCode = data.weather[0].icon;
+                    const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+                    const weatherIcon = document.getElementById('weather-icon');
+                    weatherIcon.src = iconUrl;
+                    weatherIcon.style.display = 'block';
+                } else {
+                    document.getElementById('temperature').innerText = 'City not found';
+                    document.getElementById('weather-icon').style.display = 'none';
+                }
+            } catch (error) {
+                document.getElementById('temperature').innerText = 'Error fetching data';
+                document.getElementById('weather-icon').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
