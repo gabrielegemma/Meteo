@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>La temperatura secondo Ronnie!</title>
+    <title>Weather App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+
+            background-image: url('https://i.etsystatic.com/45053220/r/il/c480df/5474967939/il_1588xN.5474967939_ahzr.jpg');
+            background-size: cover; /* Questo farà sì che l'immagine copra l'intero sfondo */
+            background-repeat: no-repeat; /* Questo impedirà che l'immagine si ripeta */
+            background-position: center; /* Questo centrerà l'immagine */
+
         }
         .container {
             text-align: center;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -44,16 +43,17 @@
             width: 50px;
             height: 50px;
         }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Weather App</h1>
+        <h1>Il meteo di LeoRonnie</h1>
         <input type="text" id="city" placeholder="Enter city name">
-        <button onclick="getWeather()">Get Temperature</button>
+        <button onclick="getWeather()">RICHIEDI TEMPERATURA</button>
         <p id="temperature"></p>
         <img id="weather-icon" src="" alt="Weather Icon" style="display:none;">
-    </div>
+       </div>
 
     <script>
         async function getWeather() {
@@ -65,7 +65,7 @@
                 const response = await fetch(url);
                 const data = await response.json();
                 if (data.main) {
-                    document.getElementById('temperature').innerText = `Temperature in ${city}: ${data.main.temp}°C`;
+                    document.getElementById('temperature').innerText = `La temperatura  in ${city}: ${data.main.temp}°C`;
                     const iconCode = data.weather[0].icon;
                     const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
                     const weatherIcon = document.getElementById('weather-icon');
